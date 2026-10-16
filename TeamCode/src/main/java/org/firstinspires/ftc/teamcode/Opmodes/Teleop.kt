@@ -1,30 +1,35 @@
-package org.firstinspires.ftc.teamcode.Opmodes;
+package org.firstinspires.ftc.teamcode.Opmodes
 
-import com.bylazar.configurables.annotations.Configurable;
-import com.pedropathing.follower.Follower;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.bylazar.configurables.annotations.Configurable
+import com.pedropathing.follower.Follower
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.DcMotorEx
+import org.firstinspires.ftc.teamcode.Subsystems.Turret
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants
 
 @Configurable
 @TeleOp
-public class Teleop extends OpMode {
-    private Follower follower;
+class Teleop : OpMode() {
+    lateinit var follower: Follower
+    lateinit var turret: Turret
 
-    @Override
-    public void init() {
+    override fun init() {
+        follower = Constants.createFollower(hardwareMap)
+        turret = Turret(
+            follower,
+            hardwareMap.get(DcMotorEx::class.java, "turret")
+        )
     }
 
-    @Override
-    public void init_loop() {
+    override fun init_loop() {
     }
 
-    @Override
-    public void start() {
-        follower.startTeleopDrive();
+    override fun start() {
+        follower.startTeleopDrive()
     }
 
-    @Override
-    public void loop() {
-        follower.update();
+    override fun loop() {
+        follower.update()
     }
 }
